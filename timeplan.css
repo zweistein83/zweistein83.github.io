@@ -1,0 +1,112 @@
+body {  
+  
+  font-family: 'Open Sans', sans-serif;
+  color: #efefef;
+  /*overflow: hidden;*/
+}
+
+.topdiv{
+	overflow-y: scroll; 
+	height:100%;
+}
+.event {
+	/*display: flex;*/
+	box-sizing: border-box;
+	/*resize: vertical;
+	overflow: auto;*/
+	position: absolute;
+	text-align: left;
+	font-size: 12;
+	padding: 5%;
+	background-color: #536679;
+	width: 100%;
+	height: 10%;
+	border-color: black;
+	border-width: 1.3px;
+	border-style: solid;
+	z-index: 99;
+	border-radius: 5px;
+	
+	
+}
+
+.event_name{
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.event_time{
+	position: relative;
+	top: 2px;
+	font-size: 10px;
+}
+
+.event_location{
+	position: relative;
+	top: 2px;
+	font-size: 10px;
+	font-style: italic;
+}
+
+.event_buttons_container{
+	position: absolute;
+	bottom: 2px;
+}
+
+.event_button{
+	background-color: rgba(0, 0, 0,0.5);
+	border: none;
+	color: white;
+	padding: 3px 6px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+	margin: 2px;
+	border-radius: 5px;
+}
+
+.day {
+	position: relative;
+	float: left;
+	width: 12%;
+	height: 150vh; /*vh = Relative to 1% of the height of the viewport*/	
+	/*-webkit-height: 100%; */
+	background-color: #ffffff;
+	background-image: linear-gradient(rgba(0,0,0,.2) 50%, transparent 50%);
+	/*background-size: 1px 10%;*/
+	background-size: 100% 10%;
+	background-repeat: repeat-y;
+	border-width: 0.5px;
+	border-color: #FFFFFE;
+	border-style: solid;	
+}
+
+.day_name {
+  position: relative;
+  height: 5%;
+  background-color: #536679;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 7.5vh;  
+}
+
+.hour {
+  position: relative;
+  height: 5%;
+  background-color: rgba(83, 102, 121,0.5);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 7.5vh;  
+}
+
+.bgblue {
+	background-color: #8a9dec;
+}
+
+.bgred {
+	background-color: red;
+}

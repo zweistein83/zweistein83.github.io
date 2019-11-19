@@ -1,0 +1,16 @@
+{
+    "settings": {
+        "day_names": ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "L\u00F8rdag", "S\u00F8ndag"]
+    },
+    "W_45_2019:": {
+        "day_1": [{"event_name" : "Mattematikk", "event_color" : "blue", "event_start" : [11,00], "event_end" : [12, 00]}]
+            
+        },
+        "day_2": {},
+        "day_3": {},
+        "day_4": {},
+        "day_5": {},
+        "day_6": {},
+        "day_7": {}
+    }
+}

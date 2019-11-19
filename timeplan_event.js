@@ -1,0 +1,3 @@
+class timetable_event{
+    
+}
