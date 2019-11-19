@@ -116,6 +116,7 @@ function buttonTest(el){
 	console.log(el.parentNode.parentNode.id);
 	let par_id = el.parentNode.parentNode.id;
 	console.log(JSON.parse(par_id));
+	parsedJSON = JSON.parse(newJSON);
 }
 
 // TODO: Remove event from "database"
