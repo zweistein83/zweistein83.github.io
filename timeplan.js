@@ -214,7 +214,7 @@ function test_data(){
 	create_event("W_45_2019", "Test2", "day_2",[8,30],[19,01], "rom_y", "bgred");
 }
 
-
+test_data();
 
 read_events_week("W_45_2019");
 //add_timetable_event("W_45_2019","1021201","Matematikk", "day_2", [9, 0], [10, 0], "Rom_3", "bgred");
