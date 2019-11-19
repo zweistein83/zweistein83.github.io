@@ -117,6 +117,9 @@ function buttonTest(el){
 	let par_id = el.parentNode.parentNode.id;
 	console.log(JSON.parse(par_id));
 	parsedJSON = JSON.parse(newJSON);
+	read_events_week("W_45_2019");
+	save_events_to_local();
+	
 }
 
 // TODO: Remove event from "database"
