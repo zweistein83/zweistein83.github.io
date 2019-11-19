@@ -218,3 +218,5 @@ function test_data(){
 
 read_events_week("W_45_2019");
 //add_timetable_event("W_45_2019","1021201","Matematikk", "day_2", [9, 0], [10, 0], "Rom_3", "bgred");
+
+/*Test*/
