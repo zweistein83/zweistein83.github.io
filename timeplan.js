@@ -4,9 +4,8 @@ var first_hour = 7;
 var row_height = 5;
 var number_of_headers = 1;
 var days_arr = ["day_1", "day_2", "day_3", "day_4", "day_5", "day_6", "day_7"];
-
 var edit_event_mode = false; // Set to true if editing events.
-
+/*
 var newJSON = `{
     "settings": {
         "day_names": ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "L\u00F8rdag", "S\u00F8ndag"],
@@ -23,21 +22,50 @@ var newJSON = `{
         "day_6": {},
         "day_7": {}
     }
-}
-`
+}`;
+*/
+var initJSON = `{
+    "settings": {
+        "day_names": ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "L\u00F8rdag", "S\u00F8ndag"],
+		"time_label": "tid"
+    },
+    "W_45_2019": {
+        "day_1": {},
+        "day_2": {},
+        "day_3": {},
+        "day_4": {},
+        "day_5": {},
+        "day_6": {},
+        "day_7": {}
+    }
+}`
+
 
 // TODO:
 /*
 	- location / room in event	
 	- info in event
 	-
+	// var parsedJSON = JSON.parse(newJSON);
 */
 
-//var parsedJSON = JSON.parse(newJSON);
 var myStorage = window.localStorage;
-var parsedJSON = JSON.parse(myStorage.getItem("schedule"));
-var day_names = parsedJSON["settings"]["day_names"]
-var time_label = parsedJSON["settings"]["time_label"]
+var parsedJSON;
+try{
+	parsedJSON = JSON.parse(myStorage.getItem("schedule"));
+}
+catch (err){
+	console.log(err);
+	console.log("WHADDAFUCK");
+	parsedJSON = JSON.parse(initJSON);
+}
+
+if (parsedJSON === null){
+	parsedJSON = JSON.parse(initJSON);
+}
+
+var day_names = parsedJSON["settings"]["day_names"];
+var time_label = parsedJSON["settings"]["time_label"];
 document.getElementById("time_label").innerHTML = time_label;
 
 
