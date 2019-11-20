@@ -5,6 +5,8 @@ var row_height = 5;
 var number_of_headers = 1;
 var days_arr = ["day_1", "day_2", "day_3", "day_4", "day_5", "day_6", "day_7"];
 
+var edit_event_mode = false; // Set to true if editing events.
+
 var newJSON = `{
     "settings": {
         "day_names": ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "L\u00F8rdag", "S\u00F8ndag"],
@@ -64,7 +66,7 @@ function format_time(time_arr){
 function add_event_buttons(){
 	let new_node = document.createElement("DIV");
 	new_node.classList.add("event_buttons_container");
-	let delete_btn = '<input type="button" class="event_button" value="x" onclick="delete_event_btn(this)">';
+	let delete_btn = '<input type="button" class="event_button" value="&#128465" onclick="delete_event_btn(this)">';
 	let other_btn = '<input type="button" class="event_button" value="y" onclick="delete_event_btn(this)">';	
 	new_node.innerHTML = delete_btn + other_btn;
 	return new_node;
@@ -116,10 +118,6 @@ function buttonTest(el){
 	console.log(el.parentNode.parentNode.id);
 	let par_id = el.parentNode.parentNode.id;
 	console.log(JSON.parse(par_id));
-	parsedJSON = JSON.parse(newJSON);
-	read_events_week("W_45_2019");
-	save_events_to_local();
-	
 }
 
 // TODO: Remove event from "database"
@@ -187,7 +185,34 @@ function read_events_week(week_id){
 }
 
 function create_event(event_week_id, event_name, event_day, event_start, event_end, event_location, event_color){
+	console.log(`${event_week_id}, ${event_name}, ${event_day}, ${event_start}, ${event_end}, ${event_location}, ${event_color}`);
 	parsedJSON[event_week_id][event_day][get_unique_identifier()] = {"event_name": event_name, "event_start": event_start,"event_end": event_end, "event_location": event_location, "event_color": event_color};
+	console.log(parsedJSON); //DEBUG
+	console.log({"id":get_unique_identifier(), "day":event_day});	
+	console.log({"event_name": event_name, "event_start": event_start,"event_end": event_end, "event_location": event_location, "event_color": event_color})
+}
+
+function read_event_input(){
+	const str_time_to_arr_time= s => (s.split(":").map(x=>parseInt(x,10)));
+	let event_week_id = "W_45_2019" //PLACEHOLDER
+	let event_color = "bgblue"; // PLACEHOLDER
+	let event_name = document.getElementById("menu_field_evt_name").value.toString();
+	let event_location = document.getElementById("menu_field_evt_location").value.toString();
+	let event_start = document.getElementById("menu_field_evt_start").value;
+	let event_end = document.getElementById("menu_field_evt_end").value;
+	event_start = str_time_to_arr_time(event_start);
+	event_end = str_time_to_arr_time(event_end);
+	let event_day = document.getElementById("menu_field_evt_day").value.toString();
+	//console.log(event_start);
+	//alert(event_start);
+	//DEBUG:
+	//event_day = "day_3";
+
+
+	console.log(`${event_week_id}, ${event_name}, ${event_day}, ${event_start}, ${event_end}, ${event_location}, ${event_color}`)
+	create_event(event_week_id, event_name, event_day, event_start, event_end, event_location, event_color);
+	console.log(parsedJSON); //DEBUG
+	draw_update();
 }
 
 function save_events_to_local (){
@@ -213,14 +238,33 @@ function create_week(week_id){
         "day_7": {}}
 }
 
+function draw_update(){
+	clear_all_events();
+	read_events_week("W_45_2019");//PLACEHOLDER
+}
+
 function test_data(){
 	create_event("W_45_2019", "Test", "day_6",[10,25],[12,55], "rom_x", "bgblue");
 	create_event("W_45_2019", "Test2", "day_2",[8,30],[19,01], "rom_y", "bgred");
 }
 
-test_data();
+function hide_menu(){
+	document.getElementById("floating_menu").style.visibility="hidden";
+}
+
+function show_menu(){
+	document.getElementById("floating_menu").style.visibility="visible";
+}
+
+function open_menu_btn(){
+	show_menu();
+	edit_event_mode = false;
+}
+
+
 
 read_events_week("W_45_2019");
 //add_timetable_event("W_45_2019","1021201","Matematikk", "day_2", [9, 0], [10, 0], "Rom_3", "bgred");
 
 /*Test2*/
+//testset

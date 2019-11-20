@@ -3,9 +3,34 @@
 <link rel="stylesheet" href="timeplan.css">
 </head>
 <body>
+<div class = "floating_menu" id = "floating_menu">
+	<form>
+		Event name:&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value = "" id="menu_field_evt_name"><br>
+		Event day:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input list="list_days" id = "menu_field_evt_day">
+		<datalist id="list_days">
+			<option value="day_1">
+			<option value="day_2">
+			<option value="day_3">
+			<option value="day_4">
+			<option value="day_5">
+			<option value="day_6">
+			<option value="day_7">
+		</datalist><br>		
+		Event start:&nbsp;&nbsp;&nbsp;&nbsp;<input type="time" id="menu_field_evt_start"><br>
+		Event end: &nbsp;&nbsp;&nbsp;&nbsp;<input type="time" id="menu_field_evt_end"><br>
+		Event location:&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value = "" id="menu_field_evt_location"><br>
+		<input type="button" value = "Add" onclick="read_event_input()">
+		<input type= "reset">
+		<input type="button" value = "Hide" onclick="hide_menu()">
+	</form>
+</div>
 
-
-<div class = "topdiv">	
+<div class = "topdiv">
+	<div class = "top_menu"> a<!--white "a"for spacing-->
+		<input type="button" class="top_menu_button" value="Add Event" onclick="open_menu_btn()">
+		<input type="button" class="top_menu_button" value="Save changes" onclick="save_events_to_local()">
+	</div>	
 	<div class = "day time">
 		<div class = "day_name" id = "time_label">time_label</div>
 		<div class = "hour">07:00</div>
@@ -69,7 +94,9 @@
 </div>
 
 <div id= '{"evt_data":["day_1", "Mattematikk", 11, 0,12,0]}'>
-	<div id= "testerclick1"><input type="button" class="button" value="Input Button" onclick="buttonTest(this)"><input type="button" class="button" value="SAVE" onclick="save_events_to_local()"></div>
+	<div id= "testerclick1">
+		<input type="button" class="button" value="Input Button" onclick="buttonTest(this)">
+		<input type="button" class="button" value="SAVE" onclick="save_events_to_local()"></div>
 </div>
 
 </body>
