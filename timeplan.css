@@ -51,6 +51,7 @@ body {
 .event_buttons_container{
 	position: absolute;
 	bottom: 2px;
+	visibility: hidden;
 }
 
 .event_button{

@@ -4,7 +4,9 @@ var first_hour = 7;
 var row_height = 5;
 var number_of_headers = 1;
 var days_arr = ["day_1", "day_2", "day_3", "day_4", "day_5", "day_6", "day_7"];
-var edit_event_mode = false; // Set to true if editing events.
+var edit_selected_event_mode = false; // Set to true if editing an event.
+var edited_element = null; // for setting en element for editing. This element is deleted if the element is changed.
+var edit_mode = false; // are edit buttons visible.
 var selected_week = "W_45_2019" // FORMAT: W_WW_YYYY ex:  W_01_2019 
 /*
 var newJSON = `{
@@ -93,10 +95,10 @@ function format_time(time_arr){
 	Creates a div containing buttons for editing timetable events.
 */
 function add_event_buttons(){
-	let new_node = document.createElement("DIV");
+	let new_node = document.createElement("DIV");	
 	new_node.classList.add("event_buttons_container");
-	let delete_btn = '<input type="button" class="event_button" value="&#128465" onclick="delete_event_btn(this)">';
-	let other_btn = '<input type="button" class="event_button" value="y" onclick="delete_event_btn(this)">';	
+	let delete_btn = '<input type="button" class="event_button" value="Delete" onclick="delete_event_btn(this)">';
+	let other_btn = '<input type="button" class="event_button" value="Edit" onclick="edit_selected_event_btn(this)">';	
 	new_node.innerHTML = delete_btn + other_btn;
 	return new_node;
 }
@@ -152,18 +154,26 @@ function buttonTest(el){
 	console.log(JSON.parse(par_id));
 }
 
+
+function delete_event_btn(el){
+	btn_parent_node = el.parentNode.parentNode;
+	delete_event(btn_parent_node);
+
+}
 // TODO: Remove event from "database"
-function delete_event_btn(evt){	
-	btn_parent_node = evt.parentNode.parentNode; // the delete button is inside a child of the event. <div EVENT><div>BUTTON</div></div>
+function delete_event(evt){	
+	//btn_parent_node = evt.parentNode.parentNode; // the delete button is inside a child of the event. <div EVENT><div>BUTTON</div></div>
 	
 	// Deletes event from database
-	let event_id = btn_parent_node.id;
-	let event_day = btn_parent_node.parentNode.id;
-	let event_week = btn_parent_node.getAttribute("event_week");
+	let event_id = evt.id;
+	let event_day = evt.parentNode.id;
+	let event_week = evt.getAttribute("event_week");
 	delete parsedJSON[event_week][event_day][event_id];
 
-	btn_parent_node.parentNode.removeChild(btn_parent_node);
+	evt.parentNode.removeChild(evt);
 }
+
+
 
 function clear_element_by_class(class_name){	
 	let elems = document.getElementsByClassName(class_name);	
@@ -237,7 +247,8 @@ function create_event(event_week_id, event_name, event_day, event_start, event_e
 
 /*
 	Reads user-input from the Add event menu. 
-	Then saves the data in parsedJSON and draws the data in HTML. 
+	Then saves the data in parsedJSON and draws the data in HTML.
+	If edit_event mode is true: Then it deletes the old event set in event_div_optional. 
 */
 function read_event_input(){
 
@@ -256,7 +267,10 @@ function read_event_input(){
 	//alert(event_start);
 	//DEBUG:
 	//event_day = "day_3";
-
+	if (edit_selected_event_mode){
+		delete_event(edited_element);
+		edited_element = null;
+	}
 
 	console.log(`${event_week_id}, ${event_name}, ${event_day}, ${event_start}, ${event_end}, ${event_location}, ${event_color}`)
 	create_event(event_week_id, event_name, event_day, event_start, event_end, event_location, event_color);
@@ -299,6 +313,7 @@ function test_data(){
 
 function hide_menu(){
 	document.getElementById("floating_menu").style.visibility="hidden";
+	edited_element = null;
 }
 
 function show_menu(){
@@ -307,7 +322,58 @@ function show_menu(){
 
 function open_menu_btn(){
 	show_menu();
-	edit_event_mode = false;
+	edit_selected_event_mode = false;
+	edited_element = null;
+	hide_event_buttons();
+}
+
+function hide_event_buttons(){
+	let evt_btn_classes_list = document.getElementsByClassName("event_buttons_container");
+	for(let el of evt_btn_classes_list){
+		el.style.visibility = "hidden";
+	}
+}
+
+function show_event_buttons(){
+	let evt_btn_classes_list = document.getElementsByClassName("event_buttons_container");
+	for(let el of evt_btn_classes_list){
+		el.style.visibility = "visible";
+	}
+}
+
+function toggle_event_buttons(){
+	if (edit_mode){
+		hide_event_buttons();
+		edit_mode = false;
+	}
+	else{
+		show_event_buttons();
+		edit_mode = true;
+	}
+}
+
+function edit_selected_event_btn(el){
+	console.log(el.parentNode.parentNode);
+	//const hm_to_HHMM = t => (t[0]+":"[]);
+	let event_div = el.parentNode.parentNode;
+	let parent_event_div = event_div.parentNode;
+	let event_id =  event_div.id;
+	let event_day = parent_event_div.id;
+	let event_data = parsedJSON[event_div.getAttribute("event_week")][event_day][event_id];
+	let event_start = format_time(event_data["event_start"]);
+	let event_end = format_time(event_data["event_end"]);
+	let event_name = event_data["event_name"];
+	let event_location = event_data["event_location"];
+
+	document.getElementById("menu_field_evt_name").value = event_name;
+	document.getElementById("menu_field_evt_location").value = event_location;
+	document.getElementById("menu_field_evt_start").value = event_start;
+	document.getElementById("menu_field_evt_end").value = event_end;	
+	document.getElementById("menu_field_evt_day").value = event_day;
+	edit_selected_event_mode = true;
+	edited_element = event_div;
+	show_menu();
+
 }
 
 

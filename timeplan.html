@@ -22,7 +22,7 @@
 		Event start:&nbsp;&nbsp;&nbsp;&nbsp;<input type="time" id="menu_field_evt_start"><br>
 		Event end: &nbsp;&nbsp;&nbsp;&nbsp;<input type="time" id="menu_field_evt_end"><br>
 		Event location:&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value = "" id="menu_field_evt_location"><br>
-		<input type="button" value = "Add" onclick="read_event_input()">
+		<input type="button" value = "Ok" onclick="read_event_input()">
 		<input type= "reset">
 		<input type="button" value = "Hide" onclick="hide_menu()">
 	</form>
@@ -31,6 +31,7 @@
 <div class = "topdiv">
 	<div class = "top_menu"> a<!--white "a"for spacing-->
 		<input type="button" class="top_menu_button" value="Add Event" onclick="open_menu_btn()">
+		<input type="button" class="top_menu_button" value="Edit Events" onclick="toggle_event_buttons()">
 		<input type="button" class="top_menu_button" value="Save changes" onclick="save_events_to_local()">
 	</div>	
 	<div class = "day time">
