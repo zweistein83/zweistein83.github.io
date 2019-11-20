@@ -202,6 +202,9 @@ function read_events_week(week_id){
 	var selected_week = parsedJSON[week_id];
 
 
+
+
+
 	//console.log(selected_week);
 
 	for (let day of days_arr) {
@@ -314,3 +317,18 @@ read_events_week(selected_week);
 
 /*Test2*/
 //testset
+
+
+/*
+	TODO:
+	- color selector for events
+	- week selection
+	- add date to days
+	- information for user after saving
+	- hover for buttons
+	- button feedback.
+
+	- verify input after clicking.
+	- some kind of feedback when something about the input is wrong.
+
+*/

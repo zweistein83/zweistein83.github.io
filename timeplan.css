@@ -85,6 +85,14 @@ body {
 
 }
 
+.top_menu_button:hover{
+	background-color: rgb(109, 109, 109);
+}
+
+.top_menu_button:active{
+	font-weight: bold;
+}
+
 .floating_menu{
 	position: absolute;
 	z-index: 9999;
