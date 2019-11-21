@@ -237,11 +237,11 @@ function read_events_week(week_id){
 }
 
 function create_event(event_week_id, event_name, event_day, event_start, event_end, event_location, event_color){
-	console.log(`${event_week_id}, ${event_name}, ${event_day}, ${event_start}, ${event_end}, ${event_location}, ${event_color}`);
+	//console.log(`${event_week_id}, ${event_name}, ${event_day}, ${event_start}, ${event_end}, ${event_location}, ${event_color}`);
 	parsedJSON[event_week_id][event_day][get_unique_identifier()] = {"event_name": event_name, "event_start": event_start,"event_end": event_end, "event_location": event_location, "event_color": event_color};
-	console.log(parsedJSON); //DEBUG
-	console.log({"id":get_unique_identifier(), "day":event_day});	
-	console.log({"event_name": event_name, "event_start": event_start,"event_end": event_end, "event_location": event_location, "event_color": event_color})
+	//console.log(parsedJSON); //DEBUG
+	//console.log({"id":get_unique_identifier(), "day":event_day});	
+	//console.log({"event_name": event_name, "event_start": event_start,"event_end": event_end, "event_location": event_location, "event_color": event_color})
 }
 
 
@@ -255,7 +255,7 @@ function read_event_input(){
 	// Time HH:MM to [H:int,M:int]
 	const str_time_to_arr_time= s => (s.split(":").map(x=>parseInt(x,10)));
 	let event_week_id = selected_week;
-	let event_color = "bgblue"; // PLACEHOLDER
+	//let event_color = "bgblue"; // PLACEHOLDER
 	let event_name = document.getElementById("menu_field_evt_name").value;
 	let event_location = document.getElementById("menu_field_evt_location").value;
 	let event_start = document.getElementById("menu_field_evt_start").value;
@@ -263,6 +263,7 @@ function read_event_input(){
 	event_start = str_time_to_arr_time(event_start);
 	event_end = str_time_to_arr_time(event_end);
 	let event_day = document.getElementById("menu_field_evt_day").value;
+	let event_color = "bg" +document.getElementById("menu_field_evt_color").value;
 	//console.log(event_start);
 	//alert(event_start);
 	//DEBUG:
@@ -270,6 +271,8 @@ function read_event_input(){
 	if (edit_selected_event_mode){
 		delete_event(edited_element);
 		edited_element = null;
+		edit_selected_event_mode = false;
+		hide_menu();
 	}
 
 	console.log(`${event_week_id}, ${event_name}, ${event_day}, ${event_start}, ${event_end}, ${event_location}, ${event_color}`)
@@ -280,6 +283,7 @@ function read_event_input(){
 
 function save_events_to_local (){
 	myStorage.setItem("schedule", JSON.stringify(parsedJSON));
+	alert("The changes has been saved!");
 }
 
 /*
@@ -313,11 +317,14 @@ function test_data(){
 
 function hide_menu(){
 	document.getElementById("floating_menu").style.visibility="hidden";
+	document.getElementById("floating_menu").style.opacity=0;
 	edited_element = null;
+	edit_selected_event_mode = false;
 }
 
 function show_menu(){
 	document.getElementById("floating_menu").style.visibility="visible";
+	document.getElementById("floating_menu").style.opacity=1;
 }
 
 function open_menu_btn(){
@@ -352,6 +359,9 @@ function toggle_event_buttons(){
 	}
 }
 
+/*
+	Edit an element. The old element gets deleted and replaced if there are made any changes. 
+*/
 function edit_selected_event_btn(el){
 	console.log(el.parentNode.parentNode);
 	//const hm_to_HHMM = t => (t[0]+":"[]);
@@ -364,14 +374,16 @@ function edit_selected_event_btn(el){
 	let event_end = format_time(event_data["event_end"]);
 	let event_name = event_data["event_name"];
 	let event_location = event_data["event_location"];
+	let event_color = event_data["event_color"];
 
 	document.getElementById("menu_field_evt_name").value = event_name;
 	document.getElementById("menu_field_evt_location").value = event_location;
 	document.getElementById("menu_field_evt_start").value = event_start;
 	document.getElementById("menu_field_evt_end").value = event_end;	
 	document.getElementById("menu_field_evt_day").value = event_day;
+	document.getElementById("menu_field_evt_color").value = event_color.substring(2);
 	edit_selected_event_mode = true;
-	edited_element = event_div;
+	edited_element = event_div; // Bad practice. TODO:  Find alternative solution.
 	show_menu();
 
 }
